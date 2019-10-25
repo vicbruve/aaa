@@ -12,27 +12,24 @@
     <div class="inputbox">
       <van-cell-group>
         <van-field
-          v-model="username"
-          required
-          clearable
-          label="用户名"
-          right-icon="question-o"
-          placeholder="请输入用户名"
-          @click-right-icon="$toast('question')"
+          v-model="userId"
+          right-icon="contact"
+          label="账号"
+          placeholder="请输入账号"
         />
 
         <van-field
           v-model="password"
+          right-icon="bag-o"
           type="password"
           label="密码"
           placeholder="请输入密码"
-          required
         />
       </van-cell-group>
     </div>
     <div class="confirm">
-      <van-button type="info">信息按钮</van-button>
-      <van-button type="info">信息按钮</van-button>
+      <van-button type="info">登陆</van-button>
+      <van-button type="info">注册</van-button>
     </div>
   </div>
 </template>
@@ -41,19 +38,23 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 
 @Component({
+  name: "login",
   components: {}
 })
 export default class extends Vue {
-  @Prop(String)
-  username?: string;
-
-  @Prop(String)
-  password?: string;
+  private userId: string = "";
+  private password: string = "";
 }
 </script>
 
 <style lang="scss" scoped>
 .home {
+  .headimg {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
   .inputbox {
     margin-top: 2rem;
     display: flex;
@@ -63,8 +64,13 @@ export default class extends Vue {
   .confirm {
     margin-top: 2rem;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    .van-button {
+      margin: 0 30px 0;
+      display: flex;
+      justify-content: center;
+    }
   }
 }
 </style>
