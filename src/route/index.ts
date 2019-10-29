@@ -1,28 +1,17 @@
 import Vue from "vue";
 import Router from "vue-router";
-import login from "@/pages/Home.vue";
+import routes from "./routes";
 
 Vue.use(Router);
 
-const createRouter = () =>
-  new Router({
-    // mode: 'history',  // Disabled due to Github Pages doesn't support this, enable this if you need.
-    scrollBehavior: (to, from, savedPosition) => {
-      if (savedPosition) {
-        return savedPosition;
-      } else {
-        return { x: 0, y: 0 };
-      }
-    },
-    base: process.env.BASE_URL,
-    routes: [{ path: "/", component: login }]
-  });
+const router = new Router({
+  mode: "history",
+  base: "",
+  routes
+});
 
-const router = createRouter();
-
-export function resetRouter() {
-  const newRouter = createRouter();
-  (router as any).matcher = (newRouter as any).matcher; // reset router
-}
+router.afterEach((to, from) => {
+  document.title = "锦囊团";
+});
 
 export default router;
