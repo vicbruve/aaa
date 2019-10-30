@@ -5,3 +5,10 @@ export function validatePhone(phone: string): boolean {
 export function validatePassword(password: string): boolean {
   return /\w{6,}/.test(password);
 }
+
+export function validateSamePassword(
+  password: string,
+  passwordAn: string
+): boolean {
+  return password === passwordAn;
+}
