@@ -2,22 +2,26 @@
   <div>
     <router-view></router-view>
     <van-tabbar v-model="active">
-      <van-tabbar-item @click="onClickIcon"
-        ><van-icon name="chat" />
+      <van-tabbar-item @click="enterFirstPage" to="/home/firstPage"
+        ><van-icon name="wap-home-o" />
         <div>首页</div></van-tabbar-item
       >
       <div v-if="billMode === 'watch'" class="billBox">
-        <van-tabbar-item@click="onClickIcon" 
-          ><van-icon name="cart-o" />
+        <van-tabbar-item @click="enterBillWatch" to="/home/billWatch"
+          ><van-icon name="balance-list-o" />
           <div>流水</div></van-tabbar-item
         >
       </div>
       <div v-if="billMode === 'edit'" class="billBox">
-        <van-tabbar-item icon="cart-o" @click="onClickIcon"
-          >记账</van-tabbar-item
+        <van-tabbar-item @click="enterBillEdit" to="/home/billEdit"
+          ><van-icon name="edit" />
+          <div>记账</div></van-tabbar-item
         >
       </div>
-      <van-tabbar-item icon="cart-o" @click="onClickIcon">我的</van-tabbar-item>
+      <van-tabbar-item @click="enterPersonal" to="/home/personal">
+        <van-icon name="friends-o" />
+        <div>我的</div></van-tabbar-item
+      >
     </van-tabbar>
   </div>
 </template>
@@ -33,10 +37,12 @@ export default class extends Vue {
   private billMode: string = "watch";
   private active: number = 0;
 
-  @Watch("this.route.name", { immediate: true, deep: true })
-  onModeChange(newVal: any, oldVal: any) {
-    this.billMode === "";
+  private enterFirstPage() {}
+  private enterBillWatch() {
+    this.billMode = "edit";
   }
+  private enterBillEdit() {}
+  private enterPersonal() {}
 }
 </script>
 

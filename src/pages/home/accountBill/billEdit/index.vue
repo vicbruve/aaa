@@ -1,12 +1,14 @@
 <template>
-  <div>这是首页</div>
+  <div>
+    这是记账
+  </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 @Component({})
-export default class FirstPage extends Vue {
-  private a = "";
+export default class BillEdit extends Vue {
+  private a = "这是记账";
 }
 </script>
 
