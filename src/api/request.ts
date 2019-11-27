@@ -4,17 +4,14 @@ import axios, {
   AxiosPromise,
   AxiosResponse
 } from "axios";
+import { TokenModule } from "@/store/modules/token";
 
-export interface ResponseData {
-  code: number;
-  data?: any;
-  message: string;
-}
+axios.defaults.withCredentials = true; // 让ajax携带cookie
 
-const BaseUrl = process.env.VUE_APP_BASE_API;
+const apiBaseUrl = "http://27y55y7329.zicp.vip";
 
 class HttpRequest {
-  constructor(public baseUrl: string = BaseUrl) {
+  constructor(public baseUrl: string = apiBaseUrl) {
     this.baseUrl = baseUrl;
   }
 
@@ -30,6 +27,9 @@ class HttpRequest {
     instance.interceptors.request.use(
       (config: AxiosRequestConfig) => {
         config.headers["x-requested-with"] = "XMLHttpRequest";
+        if (TokenModule.usertoken) {
+          config.headers["Authorization"] = "Token " + TokenModule.usertoken;
+        }
         return config;
       },
       error => Promise.reject(error)

@@ -1,9 +1,12 @@
 <template>
   <div>
+    <div id="nav">
+      <router-link to="/">Home</router-link>
+    </div>
     <div class="registerInputbox">
       <van-cell-group>
         <van-field
-          v-model="userPhone"
+          v-model="userName"
           required
           clearable
           label="手机号"
@@ -11,7 +14,7 @@
         />
 
         <van-field
-          v-model="userName"
+          v-model="nickname"
           required
           clearable
           label="用户名"
@@ -44,7 +47,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import {
-  validatePhone,
+  validateName,
   validatePassword,
   validateSamePassword
 } from "@/utils/validator";
@@ -55,25 +58,25 @@ import { register, login } from "@/api/auth";
   components: {}
 })
 export default class extends Vue {
-  private userPhone: string = "";
+  private userName: string = "";
   private userPassword: string = "";
   private userPasswordAn: string = "";
-  private userName: string = "";
+  private nickname: string = "";
 
   public AppRegister() {
-    if (!validatePhone(this.userPhone)) {
+    if (!validateName(this.userName)) {
       return this.$dialog.alert({
         message: "手机号码格式不正确，请重新输入"
       });
     }
 
-    if (!validatePhone(this.userPhone)) {
+    if (!validateName(this.userName)) {
       return this.$dialog.alert({
         message: "手机号码格式不正确，请重新输入"
       });
     }
 
-    if (!this.userName) {
+    if (!this.nickname) {
       return this.$dialog.alert({
         message: "用户名不能为空，请重新输入"
       });
@@ -93,7 +96,7 @@ export default class extends Vue {
       });
     }
 
-    register(this.userPhone, this.userPassword, this.userName);
+    register(this.userName, this.userPassword, this.nickname);
   }
 }
 </script>
@@ -108,5 +111,16 @@ export default class extends Vue {
   margin-left: 5%;
   margin-right: 5%;
   margin-top: 100px;
+}
+
+#nav {
+  padding: 30px;
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
 }
 </style>

@@ -1,35 +1,40 @@
 <template>
-  <div class="home">
-    <div class="headimg">
-      <van-image
-        round
-        width="10rem"
-        height="10rem"
-        src="https://img.yzcdn.cn/vant/cat.jpeg"
-        fit="cover"
-      />
+  <div>
+    <div id="nav">
+      <router-link to="/">Home</router-link>
     </div>
-    <div class="inputbox">
-      <van-cell-group>
-        <van-field
-          v-model="userPhone"
-          right-icon="contact"
-          label="手机号"
-          placeholder="请输入手机号"
+    <div class="home">
+      <div class="headimg">
+        <van-image
+          round
+          width="10rem"
+          height="10rem"
+          src="https://img.yzcdn.cn/vant/cat.jpeg"
+          fit="cover"
         />
+      </div>
+      <div class="inputbox">
+        <van-cell-group>
+          <van-field
+            v-model="userName"
+            right-icon="contact"
+            label="手机号"
+            placeholder="请输入手机号"
+          />
 
-        <van-field
-          v-model="userPassword"
-          right-icon="bag-o"
-          type="password"
-          label="密码"
-          placeholder="请输入密码"
-        />
-      </van-cell-group>
-    </div>
-    <div class="confirm">
-      <van-button type="info" @click="AppLogin">登陆</van-button>
-      <van-button type="info" @click="handleRegister">注册</van-button>
+          <van-field
+            v-model="userPassword"
+            right-icon="bag-o"
+            type="password"
+            label="密码"
+            placeholder="请输入密码"
+          />
+        </van-cell-group>
+      </div>
+      <div class="confirm">
+        <van-button type="info" @click="AppLogin">登陆</van-button>
+        <van-button type="info" @click="handleRegister">注册</van-button>
+      </div>
     </div>
   </div>
 </template>
@@ -37,14 +42,16 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { login } from "@/api/auth";
-import { validatePhone, validatePassword } from "@/utils/validator";
+import { validateName, validatePassword } from "@/utils/validator";
+import { TokenModule } from "@/store/modules/token";
+import { userInfoModoule } from "@/store/modules/userinfo";
 
 @Component({
   name: "login",
   components: {}
 })
 export default class extends Vue {
-  private userPhone: string = "";
+  private userName: string = "";
   private userPassword: string = "";
 
   private handleRegister() {
@@ -54,7 +61,7 @@ export default class extends Vue {
   }
 
   private AppLogin() {
-    if (!validatePhone(this.userPhone)) {
+    if (!validateName(this.userName)) {
       return this.$dialog.alert({
         message: "手机号码格式不正确，请重新输入"
       });
@@ -66,10 +73,10 @@ export default class extends Vue {
       });
     }
 
-    login(this.userPhone, this.userPassword)
+    login(this.userName, this.userPassword)
       .then(res => {
-        const { code, data, message } = res.data;
-        if (code === 0) window.sessionStorage.uid = data;
+        TokenModule.saveUserToken(res.data.token);
+        userInfoModoule.saveUsername(this.userName);
         this.$router.push("/home");
       })
       .catch(error => {
@@ -102,6 +109,17 @@ export default class extends Vue {
       margin: 0 30px 0;
       display: flex;
       justify-content: center;
+    }
+  }
+}
+
+#nav {
+  padding: 30px;
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+    &.router-link-exact-active {
+      color: #42b983;
     }
   }
 }

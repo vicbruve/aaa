@@ -4,6 +4,8 @@ import router from "@/route/index";
 import store from "./store";
 import Vant from "vant";
 import "vant/lib/index.css";
+import "./icon/icon.js";
+import "./icon/icon.css";
 
 Vue.use(Vant);
 

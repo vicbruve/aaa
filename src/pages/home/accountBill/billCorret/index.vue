@@ -1,8 +1,8 @@
 <template>
-  <div class="billEdit">
+  <div>
     <van-cell-group>
       <van-field
-        v-model="EditForm.billId"
+        v-model="corretForm.billId"
         required
         clearable
         label="用户名"
@@ -29,7 +29,7 @@
       </van-popup>
 
       <van-field
-        v-model="EditForm.account"
+        v-model="corretForm.account"
         type="password"
         label="密码"
         placeholder="请输入密码"
@@ -37,7 +37,7 @@
       />
 
       <van-field
-        v-model="EditForm.message"
+        v-model="corretForm.message"
         type="password"
         label="密码"
         placeholder="请输入密码"
@@ -45,21 +45,21 @@
       />
     </van-cell-group>
 
-    <van-button @click="postEdit">修改</van-button>
+    <van-button @click="postCorret">修改</van-button>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 @Component({
-  name: "BillEdit"
+  name: "BillCorret"
 })
-export default class BillEdit extends Vue {
+export default class BillCorret extends Vue {
   private created() {
     this.a = this.$route.query;
   }
   private a: any;
-  private EditForm = {
+  private corretForm = {
     message: "",
     account: "",
     billId: "",
@@ -72,17 +72,13 @@ export default class BillEdit extends Vue {
   private onConfirm(value: string, index: number) {
     this.value = value;
     this.showPicker = false;
-    this.EditForm.sortId = index;
+    this.corretForm.sortId = index;
   }
 
-  private postEdit() {
-    console.log(this.EditForm.sortId);
+  private postCorret() {
+    console.log(this.corretForm.sortId);
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.billEdit {
-  margin-top: 55px;
-}
-</style>
+<style lang="scss" scoped></style>
